@@ -3,17 +3,158 @@
 
   <Home>
     <template v-slot:content>
+       <v-pagination
+    v-model="page"
+    :pages="10"
+    :range-size="1"
+    active-color="#DCEDFF"
+    @update:modelValue="updateHandler"
+  />
       <h1>Estudantes</h1>
-    </template>
-  </Home>
+      <font>{{cursos.nome}}</font>
+            <div class="row row-cols-1 row-cols-md-2 g-4" >
+               <div class="col"  v-for="(aluno, i) in alunos" :key="i" >
+                  <div class="card">
+              <a href="#"><div class="card-header"><h3>{{aluno.id}}</h3></div></a>
+              <div class="card-body">
+                <table>
+                  <tr>
+                    <th><font class="card-title">Nome </font></th>
+                    <th>:</th>
+                    <th><font>{{aluno.nome_completo}}</font></th>
+                  </tr>
+                  <tr>
+                    <th><font class="card-title">Email </font></th>
+                    <th>:</th>
+                    <th><font class="font-email">{{aluno.email}}</font></th>
+                  </tr>
+                  <tr>
+                    <th><font class="card-title">Endereço</font></th>
+                    <th>:</th>
+                    <th><font>rua {{aluno.endereço.rua}}, Nº {{aluno.endereço.numero}} - {{aluno.endereço.cidade}}</font></th>
+                  </tr>
+                    <tr>
+                    <th><font class="card-title">Curso </font></th>
+                    <th>:</th>
+                    <div v-for="(curso, i) in cursos" :key="i" >
+                      <th class="font-curso" v-if="(aluno.curso === curso.id)"><font>{{curso.nome}}</font></th>
+                    </div>
+                  </tr>
+                  <tr>
+                    <th><font class="card-title">Disciplinas</font></th> 
+                    <th>:</th>
+                    <th><font>{{aluno.disciplinas[0]}}, {{aluno.disciplinas[1]}}, {{aluno.disciplinas[2]}}</font></th>
+                  </tr>
+                </table>
+              </div>
+            </div>
+           </div>
+          </div>
+          <!--
+             <div class="action-row">
+                    <button v-if="perpage == 60" @click="salvarRelato()"><span>Publicar</span></button>
+                    <button v-if="perpage < 50" @click="previous()"><span>Anterior</span></button>
+                    <button v-if="perpage < 50" @click="next()"><span>Próximo</span></button>
+                </div>
+          -->
+          </template>
+        </Home>
   </div>
+
+ 
 </template>
 <script>
 import Home from './Home.vue'
-export default{
+import api from "../services/config"
+import { defineComponent, onMounted, ref } from "vue";
+
+export default defineComponent({
   name: 'Show',
   components:{
         Home,
   },
-}
+  data(){
+    return{
+      alunos:[]
+    }
+  },
+  /*
+  data(){
+            return {
+                perpage: 10,
+                pageNumber:0
+            }
+        },*/
+  setup(){
+    
+    var alunos = ref([]);
+    var cursos = ref([]);
+    var fetchAlunos = () =>
+      api
+        .get("/alunos")
+        .then((response) => (alunos.value = 
+        response.data));
+    var fetchCursos = () =>
+      api
+        .get("/cursos")
+        .then((response) => (cursos.value = 
+        response.data));
+    onMounted(fetchCursos); 
+    onMounted(fetchAlunos);
+
+    if(cursos.id==alunos.curso){
+      alunos.curso = cursos.nome;
+    }
+    return {alunos,cursos};
+  },
+  
+/*   computed:{
+        currentPageItems(){
+          return this.alunos.slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+1+this.perpage)
+        }
+         },
+  methods: {
+            next(){
+                this.perpage = this.perpage + 10;
+            },
+            previous(){
+        this.perpage = this.perpage - 10;
+            },
+        }
+  */
+})
 </script>
+<style scoped>
+.card-body{
+  text-align: left;
+  display: flex;
+}
+.card{
+  min-width: 600px;
+  height: 300px;
+  box-shadow: 0 0 1em black;
+  border-radius: 10px;
+
+}
+table th{
+  padding: 5px;
+}
+table tr{
+  vertical-align: middle;
+}
+.card a{
+  text-decoration: none;
+  color:Black;
+}
+.card a:hover{
+  color:red;
+  opacity: 1.5;
+
+}
+font{
+  text-transform: capitalize; /* Primeira letra maiúscula*/
+}
+.font-email{
+  text-transform: none;
+}
+</style>
