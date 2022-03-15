@@ -1,0 +1,44 @@
+.card-body{
+    text-align: left;
+    display: flex;
+  }
+  .card{
+    min-width:400px;
+    max-width: 500px;
+    height: 300px;
+    box-shadow: 0 0 0em black;
+    border-radius: 10px;
+  
+  }
+  table th{
+    padding: 5px;
+  }
+  table tr{
+    vertical-align: middle;
+  }
+  .card a{
+    text-decoration: none;
+    color:Black;
+  }
+  .card a:hover{
+    color:red;
+    opacity: 1.5;
+  
+  }
+  .card-title{
+    box-shadow:  0 0em black;
+  }
+  .card-body:hover{
+      opacity: 0.5;
+      background-color: black;
+      color:white;
+  }
+  font{
+    text-transform: capitalize; /* Primeira letra maiúscula*/
+  }
+  .font-email{
+    text-transform: none;
+  }
+  h1{
+      color:white;
+  }

@@ -3,16 +3,8 @@
 
   <Home>
     <template v-slot:content>
-       <v-pagination
-    v-model="page"
-    :pages="10"
-    :range-size="1"
-    active-color="#DCEDFF"
-    @update:modelValue="updateHandler"
-  />
-      <h1>Estudantes</h1>
       <font>{{cursos.nome}}</font>
-            <div class="row row-cols-1 row-cols-md-2 g-4" >
+            <div class="row row-cols-1 row-cols-md-3 g-4" >
                <div class="col"  v-for="(aluno, i) in alunos" :key="i" >
                   <div class="card">
               <a href="#"><div class="card-header"><h3>{{aluno.id}}</h3></div></a>
@@ -50,13 +42,6 @@
             </div>
            </div>
           </div>
-          <!--
-             <div class="action-row">
-                    <button v-if="perpage == 60" @click="salvarRelato()"><span>Publicar</span></button>
-                    <button v-if="perpage < 50" @click="previous()"><span>Anterior</span></button>
-                    <button v-if="perpage < 50" @click="next()"><span>Próximo</span></button>
-                </div>
-          -->
           </template>
         </Home>
   </div>
@@ -73,18 +58,6 @@ export default defineComponent({
   components:{
         Home,
   },
-  data(){
-    return{
-      alunos:[]
-    }
-  },
-  /*
-  data(){
-            return {
-                perpage: 10,
-                pageNumber:0
-            }
-        },*/
   setup(){
     
     var alunos = ref([]);
@@ -101,60 +74,8 @@ export default defineComponent({
         response.data));
     onMounted(fetchCursos); 
     onMounted(fetchAlunos);
-
-    if(cursos.id==alunos.curso){
-      alunos.curso = cursos.nome;
-    }
     return {alunos,cursos};
   },
-  
-/*   computed:{
-        currentPageItems(){
-          return this.alunos.slice(this.pageNumber*this.perpage,this.pageNumber*this.perpage+1+this.perpage)
-        }
-         },
-  methods: {
-            next(){
-                this.perpage = this.perpage + 10;
-            },
-            previous(){
-        this.perpage = this.perpage - 10;
-            },
-        }
-  */
 })
 </script>
-<style scoped>
-.card-body{
-  text-align: left;
-  display: flex;
-}
-.card{
-  min-width: 600px;
-  height: 300px;
-  box-shadow: 0 0 1em black;
-  border-radius: 10px;
-
-}
-table th{
-  padding: 5px;
-}
-table tr{
-  vertical-align: middle;
-}
-.card a{
-  text-decoration: none;
-  color:Black;
-}
-.card a:hover{
-  color:red;
-  opacity: 1.5;
-
-}
-font{
-  text-transform: capitalize; /* Primeira letra maiúscula*/
-}
-.font-email{
-  text-transform: none;
-}
-</style>
+<style src="./styleViews.css" scoped/>
