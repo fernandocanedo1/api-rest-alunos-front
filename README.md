@@ -1,19 +1,15 @@
 # api-rest-alunos-front
 
-## Project setup
+## Project setup install
 ```
 npm install
+npm install vue
+npm install -g json-server
 ```
 
-### Compiles and hot-reloads for development
+### Compiles commands
 ```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
+npm run serve       - Front server
+json-server db.json - Database server
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
